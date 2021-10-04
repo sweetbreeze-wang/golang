@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	exnet "ip"
+	exnet "exnet"
 	"log"
 	"net/http"
 	_ "net/http/pprof"
