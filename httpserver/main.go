@@ -53,8 +53,9 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	if ip == "" {
 		ip = exnet.ClientIP(r)
 	}
-	io.WriteString(w, "======Detail of Client IP:")
-	io.WriteString(w, ip)
-	io.WriteString(w, "\n")
+	//io.WriteString(w, "======Detail of Client IP:")
+	//io.WriteString(w, ip)
+	//io.WriteString(w, "\n")
+	fmt.Println("客户端IP：", ip)
 }
 
