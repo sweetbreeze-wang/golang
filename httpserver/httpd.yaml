@@ -6,7 +6,7 @@ metadata:
   name: httpserve
   namespace: http
 spec:
-  replicas: 2
+  replicas: 1 
   selector:
     matchLabels:
       app: httpserve
@@ -30,6 +30,12 @@ spec:
             - name: host-time
               readOnly: true
               mountPath: /etc/localtime
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - sleep
+              - 5s
         startupProbe:
           tcpSocket:
             port: 80
