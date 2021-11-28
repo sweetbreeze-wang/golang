@@ -61,9 +61,8 @@ func gracefullShutdown(server *http.Server, logger *log.Logger, quit <-chan os.S
 
 func newWebserver(logger *log.Logger) *http.Server {
 	router := http.NewServeMux()
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-	})
+	router.HandleFunc("/", rootHandler) 
+	router.HandleFunc("/healthz", healthz)
 
 	return &http.Server{
 		Addr:         listenAddr,
