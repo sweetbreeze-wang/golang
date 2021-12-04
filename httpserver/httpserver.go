@@ -1,6 +1,8 @@
 package main
 
 import (
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+        "math/rand"
 	"context"
 	"flag"
 	"fmt"
@@ -35,8 +37,10 @@ func main() {
 
 	flag.Set("v", "4")
 	//glog.V(2).Info("Starting http server...")
-	http.HandleFunc("/", rootHandler)
-	http.HandleFunc("/healthz", healthz)
+	//http.HandleFunc("/", rootHandler)
+	//http.HandleFunc("/healthz", healthz)
+        //http.Handle("/metrics", promhttp.Handler())
+        //http.Handle("/delay", delayHandle)
         if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
             logger.Fatalf("Could not listen on %s: %v\n", listenAddr, err)
         }  
@@ -63,6 +67,9 @@ func newWebserver(logger *log.Logger) *http.Server {
 	router := http.NewServeMux()
 	router.HandleFunc("/", rootHandler) 
 	router.HandleFunc("/healthz", healthz)
+        router.Handle("/metrics", promhttp.Handler())
+        router.HandleFunc("/delay", delayHandler)
+
 
 	return &http.Server{
 		Addr:         listenAddr,
@@ -109,4 +116,11 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	//io.WriteString(w, "\n")
 	fmt.Println("客户端IP：", ip)
 }
+func delayHandler(w http.ResponseWriter, r *http.Request) {
+        rand.Seed(time.Now().UnixNano())
+	sleepTime := rand.Intn(2000)
+	time.Sleep(time.Millisecond * time.Duration(sleepTime))
+        w.WriteHeader(http.StatusOK)
+        io.WriteString(w, "OK\n")
 
+}

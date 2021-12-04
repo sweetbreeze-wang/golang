@@ -5,6 +5,9 @@ metadata:
     app: httpserve
   name: httpserve
   namespace: http
+  annotations:
+    prometheus.io/port: http-metrics
+    prometheus.io/scrape: "true"
 spec:
   replicas: 1 
   selector:
