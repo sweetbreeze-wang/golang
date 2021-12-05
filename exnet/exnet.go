@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// HasLocalIPddr 检测 IP 地址字符串是否是内网地址
+// HasLocalIPddr 检测 IP 地址字符串是否是内网地址!!!
 // Deprecated: 此为一个错误名称错误拼写的函数，计划在将来移除，请使用 HasLocalIPAddr 函数
 func HasLocalIPddr(ip string) bool {
 	return HasLocalIPAddr(ip)
